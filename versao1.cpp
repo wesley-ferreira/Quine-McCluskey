@@ -16,6 +16,9 @@ float funcao_sin(float);
 
 int main()
 {
+
+	cout << "Git is Awesome" << endl;
+	
 	ofstream file;
     file.open("questao1.xls", ios::app);
     
