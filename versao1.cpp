@@ -13,7 +13,7 @@ vector<float> x_values_list();
 vector<float> fx(vector<float>, int);
 vector<int> n_de_iteracoes(int);
 float funcao_sin(float);
-/////// edital alguma coisa e salva
+// versao 4
 int main()
 {
 
