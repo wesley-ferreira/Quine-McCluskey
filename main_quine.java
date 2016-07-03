@@ -234,7 +234,7 @@ public class main_quine
 	public static int[] create_minterm_from_terms(int minterms1[], int minterms2[])
 	{
 		int newTerm[] = new int[minterms1.length];
-		
+
 		for(int i = 0; i < minterms1.length; i++)
 		{
 			if(minterms1[i] == minterms2[i]) 
@@ -279,24 +279,27 @@ public class main_quine
 		}		
 		return qnt_of_different_terms;
 	}
-		
-	public static String decimal_to_binary_string_4_digits(int decimal_minterm)
+
+	//ORDEM DE USO 1 => RECEBE UM NUMERO INTEIRO/MINTERMO E O CONVERTE EM UM BINARIO DE 4 DIGITOS EM FORMA DE STRING	
+	public static String decimal_to_binary_string_4_digits(int decimal_minterm) 
 	{
 		String strBinaryNumber = Integer.toBinaryString(decimal_minterm); 				
 		while (strBinaryNumber.length() < 4)
 		{    
         	strBinaryNumber = "0" + strBinaryNumber;        
        	} 
-       	return strBinaryNumber;  
+       	return strBinaryNumber;  // EXEMPLO: SE A FUNCAO RECEBEU 4, ELA RETORNARA UMA STRING "0100".
     }
 
+    //ORDEM DE USO 2 => RECEBE UMA STRING CONTENDO OS DIGITOS EM BINARIO (EX:0001 OU 1111) E RETORNA UM ARRAY COM ESTES DIGITOS.
     public static String[] binary_digits_to_array(String strBinaryNumber) 
 
     {
     	String binary_digits_array[] = strBinaryNumber.split("");
-    	return binary_digits_array;
+    	return binary_digits_array;  // RETORNA ARRAY DE STRING EX: array[] = {0, 0, 0, 1} ou array[] = {1, 1, 1, 1};
     }
 
+    //ORDEM DE USO 3 => RECEBE UM ARRAY DE STRING CONTENDO OS DIGITOS BINARIOS DE UM NUMERO E RETORNA ESTE ARRAY NO TIPO INTEIRO.
     public static int[] string_to_int_array(String[] binary_digits_array)
     {
     	int int_binary_array[]= new int[binary_digits_array.length];
@@ -304,9 +307,11 @@ public class main_quine
         {
             int_binary_array[i] = Integer.parseInt(binary_digits_array[i]);        
         }
-        return int_binary_array;
+        return int_binary_array; // EXEMPLO: RECEBEU string array[] = { 0, 1, 0, 1} e retorna int array[] = { 0, 1, 0, 1}.
     }
 
+    //ORDEM DE USO 4 => RECEBE TODOS OS ARRAYS REFERENTES AOS MINTERMOS (EX: int array[] = { 0, 0, 1, 1}) E COM UM LAÇO OS TRANSFORMA
+    // NAS LINHAS DE UMA MATRIZ DE INTEIROS
     public static int[][] create_table(int[] minterms)
     {
 		int[][] tabela = new int[minterms.length][3];
@@ -315,6 +320,8 @@ public class main_quine
     	{
     		tabela[i] = string_to_int_array(binary_digits_to_array(decimal_to_binary_string_4_digits(minterms[i])));
     	}   
-       	return tabela;
+       	return tabela; //RETORNA MATRIZ  EX: int matriz[][] = {{0, 0, 0, 0},
+       	// 													   {0, 0, 0, 1}...
+       	//                                                     {1, 1, 1, 1}}    
     }
 }
