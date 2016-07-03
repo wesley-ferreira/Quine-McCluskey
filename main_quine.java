@@ -47,13 +47,13 @@ public class main_quine
 //		System.out.println("\nMini termos não usados coluna 3");
 //		print_table(notUsedMinterms2);
 		
-		int [][] primary_implication_table = result_implication_table(notUsedMinterms1, notUsedMinterms2);
-		primary_implicant_chat(primary_implication_table, tabelaMinterms);
+		int [][] prime_implicant_table = result_implicant_table(notUsedMinterms1, notUsedMinterms2);
+		prime_implicant_chat(prime_implicant_table, tabelaMinterms);
 		
-		return primary_implication_table;
+		return prime_implicant_table;
 	}
 	
-	public static void primary_implicant_chat(int not_used_minterms[][], int[][] initial_minterms)
+	public static void prime_implicant_chat(int not_used_minterms[][], int[][] initial_minterms)
 	{		
 		System.out.println("not used minterms");
 		print_table(not_used_minterms);
@@ -71,7 +71,7 @@ public class main_quine
 			}
 		}
 		
-		int primary_implication_added = 0;
+		int prime_implicant_added = 0;
 		for(int i = 0; i < initial_minterms.length; i++)
 		{
 			for(int j = 0; j < not_used_minterms.length; j++)
@@ -80,8 +80,8 @@ public class main_quine
 				{
 					if(k == 3 && ((not_used_minterms[j][k] == 2) || (initial_minterms[i][k] == not_used_minterms[j][k])))
 					{
-						newMatrix[i][primary_implication_added] = j;
-						primary_implication_added++;
+						newMatrix[i][prime_implicant_added] = j;
+						prime_implicant_added++;
 						break;
 					}
 					if(not_used_minterms[j][k] == 2) continue;
@@ -90,7 +90,7 @@ public class main_quine
 				}
 				
 			}
-			primary_implication_added = 0;
+			prime_implicant_added = 0;
 		}
 		
 		int usedIndex[] = new int[newMatrix.length];
@@ -119,7 +119,7 @@ public class main_quine
 		
 		//se só tiver apenas um implicante primário, passar a ser um implicante primário essencial
 		//ou seja, se usedIndex[i] == 1
-		int essential_implication[][] = new int[newMatrix.length][];
+		int essential_implicant[][] = new int[newMatrix.length][];
 		System.out.println();
 		
 		int essential_added = 0;
@@ -128,17 +128,17 @@ public class main_quine
 			System.out.println(usedIndex[i]);
 			if(usedIndex[i] == 1)
 			{
-				essential_implication[essential_added] = not_used_minterms[newMatrix[i][0]]; 
+				essential_implicant[essential_added] = not_used_minterms[newMatrix[i][0]]; 
 				essential_added++;
 			}
 		}
 //		int newMatrixWithoutEssential[][] = new int [usedIndex.length - essential_added][not_used_minterms.length];
 
-		System.out.println("\nessential implications");
-		print_table(create_matrix_from_biggest_matrix(essential_implication, essential_added));
+		System.out.println("\nessential implicants");
+		print_table(create_matrix_from_biggest_matrix(essential_implicant, essential_added));
 	}
 		
-	public static int[][] result_implication_table(int matrix1[][], int matrix2[][])
+	public static int[][] result_implicant_table(int matrix1[][], int matrix2[][])
 	{
 		int newMatrix[][] = new int[50][];		
 		int itensAdded = 0;
@@ -205,7 +205,7 @@ public class main_quine
 	{
 		int newMatrix[][] = new int[realUsedLines][];
 		
-		for(int i = 0; i< realUsedLines; i++)
+		for(int i = 0; i < realUsedLines; i++)
 		{
 			newMatrix[i] = matrix[i];
 		}		
@@ -255,7 +255,7 @@ public class main_quine
 		return newTerm; //EXEMPLO SE ESTA FUNCÃO RECEBESSE A[] = {0,0,0,0} E B[] = {0,1,0,0}, ELA RETORNARIA UM ARRAY C[] = {0,2,0,0}.
 	}
 	
-    //IMPRIME UMA MATRIZ COM ELEMENTOS IGUAIS A 2 IMPRESSOS COMO "-" SEM ASPAS
+    //IMPRIME UMA MATRIZ COM ELEMENTOS IGUAIS A 2 IMPRESSOS COMO TRAÇO "-" 
 	public static void print_table(int table[][])
 	{
 		for(int j = 0; j < table.length; j++)
@@ -265,13 +265,14 @@ public class main_quine
 		}
 	}
 	
-	//ESSA FUNÇÃO É USADA MAIS DE UMA VEZ. ELA RECEBE UM ARRAY E SE ALGUM DOS ELEMENTOS FOR O NUMERO 2
-	//ELA IMIPRIME(APENAS IMPRIME, NAO SUSTITUE) "-" NO LUGAR DELE. 
+	//FUNÇÃO USADA MAIS DE UMA VEZ. ELA RECEBE UM ARRAY E SE ALGUM DOS ELEMENTOS FOR O NÚMERO 2
+	//É IMPRESSO (APENAS IMPRIME, NAO SUSTITUE) "-" NO LUGAR DELE. 
 	public static void print_minterm(int minterm[])
 	{
 		for(int i = 0; i < minterm.length; i++)
 		{
-			if(minterm[i] == 2) System.out.print("-"); //SE ESSA FUNÇÃO RECEBESSE a[] = {0,2,1,2}, SERIA IMPRESSO "0-1-" SEM AS ASPAS
+			if(minterm[i] == 2)
+			System.out.print("-"); //SE RECEBESSE a[] = {0,2,1,2}, SERIA IMPRESSO 0-1-
 			else System.out.print(minterm[i]);
 		}
 	}
