@@ -185,7 +185,6 @@ public class main_quine
 		for(int i = 0; i < matrix.length - 1; i++)
 		{
 			boolean minTermUsed = false;
-			
 			for(int j = 0; j < matrix.length; j++)
 			{
 				if(qnt_of_different_terms(matrix[i], matrix[j]) == 1)
@@ -213,6 +212,10 @@ public class main_quine
 		return newMatrix;
 	}
 	
+	//ORDEM DE USO 6 => COMPARA TODAS AS LINHAS DA MATRIZ INICIAL E RETORNA UMA NOVA MATRIZ EM QUE SUAS LINHAS SÃO ARRAYS 
+	//EM QUE O COMPUTADOR ENCONTROU APENAS UMA DIFERENCA NAS QUATRO COLUNAS. NESTE ALGORITMO NAO É NECESSARIO SEPARAR OS
+	//MINTERMOS EM GRUPOS PORQUE ESSA DIVISÃO SÓ SERVE PARA FACILITAR A VISUALIZAÇÃO DO DIGITOS NO PAPEL E APROXIMAR 
+	//AS LINHAS QUE PROVAVELMENTE TERÃO UMA SÓ DIFERENÇA. 
 	public static int[][] create_reduced_matrix(int matrix[][])
 	{		
 		int newMatrix[][] = new int[50][];		
@@ -228,9 +231,12 @@ public class main_quine
 				}
 			}
 		}
-		return create_matrix_from_biggest_matrix(newMatrix, mintermsCreated);
+		return create_matrix_from_biggest_matrix(newMatrix, mintermsCreated); //EXEMPLO: SE O PARAMETRO FOSSE A MATRIZ
+		// matrix[][] = {{0,0,0,0}, {0,0,0,1}, {1,1,1,1}}, O RETORNO SERIA UMA MATRIZ F[][]={{0,0,0,2}}, QUE SE IMPRESSA, MOSTRARIA 000-
 	}
-					
+	
+	//ORDEM DE USO 5 => RECEBE E COMPARA OS DIGITOS DA MESMA COLUNA DE DOIS ARRAYS (QUE INICIALMENTE SÃO AS LINHAS DA MATRIZ INICIAL)
+	//E RETORNA UM ARRAY COM O DIGITO QUE SE DEFERENCIOU SUBSTITUIDO POR 2.
 	public static int[] create_minterm_from_terms(int minterms1[], int minterms2[])
 	{
 		int newTerm[] = new int[minterms1.length];
@@ -246,9 +252,10 @@ public class main_quine
 				newTerm[i] = 2;
 			}
 		}		
-		return newTerm;
+		return newTerm; //EXEMPLO SE ESTA FUNCÃO RECEBESSE A[] = {0,0,0,0} E B[] = {0,1,0,0}, ELA RETORNARIA UM ARRAY C[] = {0,2,0,0}.
 	}
-		
+	
+    //IMPRIME UMA MATRIZ COM ELEMENTOS IGUAIS A 2 IMPRESSOS COMO "-" SEM ASPAS
 	public static void print_table(int table[][])
 	{
 		for(int j = 0; j < table.length; j++)
@@ -258,26 +265,30 @@ public class main_quine
 		}
 	}
 	
+	//ESSA FUNÇÃO É USADA MAIS DE UMA VEZ. ELA RECEBE UM ARRAY E SE ALGUM DOS ELEMENTOS FOR O NUMERO 2
+	//ELA IMIPRIME(APENAS IMPRIME, NAO SUSTITUE) "-" NO LUGAR DELE. 
 	public static void print_minterm(int minterm[])
 	{
 		for(int i = 0; i < minterm.length; i++)
 		{
-			if(minterm[i] == 2) System.out.print("-"); 
+			if(minterm[i] == 2) System.out.print("-"); //SE ESSA FUNÇÃO RECEBESSE a[] = {0,2,1,2}, SERIA IMPRESSO "0-1-" SEM AS ASPAS
 			else System.out.print(minterm[i]);
 		}
 	}
-		
+	
+	//RECEBE DOIS ARRAYS (QUE SAO DUAS LINHAS DE UMA MATRIZ) COMO PARAMETRO E RETORNA O NUMERO DE TERMOS QUE SAO DIFERENTES
 	public static int qnt_of_different_terms(int minterms1[], int minterms2[])
 	{		
 		int qnt_of_different_terms = 0;		
-		for(int i = 0; i<4; i++)
+		for(int i = 0; i < 4 ; i++)
 		{
 			if(minterms1[i] != minterms2[i])
 			{
 				qnt_of_different_terms++;
 			}
 		}		
-		return qnt_of_different_terms;
+		return qnt_of_different_terms;// SE OS PARAMETROS FOSSEM A[] = {0, 0, 0, 1} e B[] = {1, 1, 1, 1}, A FUNÇÃO RETORNARIA 3,
+		                                                  //CASO FOSSEM C[] = {0, 1, 0, 0} e D[] = {0, 1, 0, 1}, RETORNARIA 1. 
 	}
 
 	//ORDEM DE USO 1 => RECEBE UM NUMERO INTEIRO/MINTERMO E O CONVERTE EM UM BINARIO DE 4 DIGITOS EM FORMA DE STRING	
