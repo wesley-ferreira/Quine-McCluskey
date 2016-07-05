@@ -181,8 +181,8 @@ public class Quine_McCluskey
 		
 	
 	/*
-		RECEBE DUAS MATRIZES E FAZ A CONCATENAÇÃO DELAS SEM REPETIR ELEMENTOS.
-		CADA MINiTERMO APARECERá APENAS NO RETORNO DESSA FUNÇÃO. 
+		RECEBE DUAS MATRIZES E ADICIONA AS LINHAS DA matrix1 E DEPOIS AS DA matrix2 EM UMA NOVA MATRIZ
+		CONFERINDO ANTES SE A LINHA JA NAO EXISTE NA newMatrix PARA QUE NAO HAJA LINHAS REPETIDAS 
 		  
 		@param  matrix1 primeira matriz
 		@param  matrix2 primeira matriz
@@ -199,10 +199,13 @@ public class Quine_McCluskey
 			if(!item_exist_in_matrix(newMatrix, matrix1[i]))
 			{
 				newMatrix[itensAdded] = matrix1[i];
-				itensAdded++;
+				itensAdded++; 
 			}
-		}
+		}// NESSE PONTO, TODAS AS LINHAS DA matrix1 COMPOEM A newMatriz QUE NAO DEVE LINHAS REPETIDAS
 		
+
+		//ESTE LOOP ADICIONA AS LINHAS DA matrix2 NA newMatrix A PARTIR
+		//DA POSICAO itensAdded QUE CRESCEU NO LOOP ANTERIOR(ADICIONANDO AS LINHAS DA matrix1)
 		for(int i = 0; i < matrix2.length; i++)
 		{
 			if(!item_exist_in_matrix(newMatrix, matrix2[i]))
@@ -230,7 +233,9 @@ public class Quine_McCluskey
 		return false;
 	}
 		
-	//RETORNA UMA MATRIZ EM QUE SUAS LINHAS SÃO MINTERMOS QUE AINDA NÃO FORAM USADOS (NAO FORAM MARCADOS).
+	//COMPARA CADA LINHA DE UMA MATRIZ COM TODAS AS OUTRAS A FIM DE CRIAR UMA NOVA MATRIZ EM QUE SUAS LINHAS SAO MINTERMOS 
+	//QUE NAO TIVERAM APENAS UMA DIFERENCA COM QUALQUER OUTRO (NO METODO TABULAR FEITO COM PAPEL E CANETA,
+	//O PROCEDIMENTO DE MARCAR UMA LINHA EH EQUIVALENTE A ESTA FUNCAO).
 	public static int[][] not_used_minterms(int matrix[][])
 	{
 		int newMatrix[][] = new int[50][];
@@ -250,9 +255,11 @@ public class Quine_McCluskey
 			
 			if(minTermUsed) continue;
 			newMatrix[minTermsNotUsed] = matrix[i];
-			minTermsNotUsed++;
+			minTermsNotUsed++; //QUANTIDADE DE LINHAS NAO USADAS QUE SERA O NUMERO DE LINHAS DA MATRIZ DA SAIDA
 		}
 		return create_matrix_from_biggest_matrix(newMatrix, minTermsNotUsed);
+		//EXEMPLO: SE ESSA FUNCAO RECEBESSE UMA MATRIZ A[][]={{0,0,0,0}, {0,0,0,1}, {0,0,1,0}, {1,1,1,1}},
+		//O RETORNO SERIA UMA NOVA MATRIZ B CONTENDO APENAS A LINHA {1,1,1,1} DA MATRIZ PARAMETRO.
 	}	
 	
 	//ORDEM DE USO 6 => RECEBE UMA MATRIZ E O NUMERO DE LINHAS DA MATRIZ QUE SERá CRIADA. FUNÇÃO GENÉRICA.
@@ -264,13 +271,14 @@ public class Quine_McCluskey
 		{
 			newMatrix[i] = matrix[i];
 		}		
-		return newMatrix; //RETONA UMA MATRIZ
+		return newMatrix; //RETONA UMA MATRIZ 
 	}
 	
-	//ORDEM DE USO 7 => COMPARA TODAS AS LINHAS DA MATRIZ INICIAL E RETORNA UMA NOVA MATRIZ EM QUE SUAS LINHAS SÃO ARRAYS 
+	//ORDEM DE USO 7 => FUNCAO QUE TORNA DESNECESSARIA A SEPARACAO DOS MINTERMOS EM GRUPOS. COMPARA TODAS AS LINHAS DA
+	// MATRIZ INICIAL E RETORNA UMA NOVA MATRIZ EM QUE SUAS LINHAS SÃO ARRAYS 
 	//EM QUE O COMPUTADOR ENCONTROU APENAS UMA DIFERENCA NAS QUATRO COLUNAS. NESTE ALGORITMO NAO É NECESSARIO SEPARAR OS
 	//MINTERMOS EM GRUPOS PORQUE ESSA DIVISÃO SÓ SERVE PARA FACILITAR A VISUALIZAÇÃO DO DIGITOS NO PAPEL E APROXIMAR 
-	//AS LINHAS QUE PROVAVELMENTE TERÃO UMA SÓ DIFERENÇA. 
+	//AS LINHAS QUE PROVAVELMENTE TERÃO UMA SO UM ELEMENTO DE DIFERENCA. 
 	public static int[][] create_reduced_matrix(int matrix[][])
 	{		
 		int newMatrix[][] = new int[50][];		
@@ -282,7 +290,8 @@ public class Quine_McCluskey
 				if(qnt_of_different_terms(matrix[i], matrix[j]) == 1)
 				{
 					newMatrix[mintermsCreated] = create_minterm_from_terms(matrix[i], matrix[j]);
-					mintermsCreated++;
+					mintermsCreated++; //QUANTIDADE DE LINHAS DA PROXIMA MATRIZ CRESCENDO. SERVIRA DE PARAMENTRO
+					//PARA CRIACAO DA PROXIMA MATRIX.
 				}
 			}
 		}
